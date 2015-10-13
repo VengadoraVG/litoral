@@ -1,0 +1,23 @@
+var Corpose = (function () {
+  return {
+    create : function (x,y, nacionality, loot) {
+      var corpose = game.add.sprite(x,y, nacionality);
+      corpose.anchor.set(.5, 1);
+      corpose.loot = loot;
+
+      return corpose;
+    },
+
+    lvlEditor : function () {
+      game.input.onDown.add(function () {
+        var x = Math.round(game.input.mouse.x + game.camera.x/20)*20,
+            y = Math.round(game.input.mouse.y + game.camera.y/20)*20;
+        return {
+          x : Math.round(game.input.mouse.x + game.camera.x/20)*20,
+          y : Math.round(game.input.mouse.y + game.camera.y/20)*20,
+
+          
+      });
+    } 
+  };
+})();

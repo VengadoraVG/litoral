@@ -1,0 +1,17 @@
+var config = {
+  world: {
+    gravity: 0
+  },
+
+  parallax: {
+    skyWidth : 2000,
+    floorHeight : 100
+  },
+
+  character: {
+    speed: {
+      walk: 80,
+      run: 150
+    }
+  }
+};

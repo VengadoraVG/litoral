@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="780" height="48" tilewidth="20" tileheight="20">
+ <tileset firstgid="1" name="terrain" tilewidth="20" tileheight="20">
+  <image source="terrain.png" width="180" height="20"/>
+ </tileset>
+ <layer name="floor" width="780" height="48">
+  <data encoding="base64" compression="zlib">
+   eJztw0ENAAAIBKBT+3c2hj5gY5KMqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq+mKrqqqqqqqqqqqqqqqqqqoeLVVVVVVVVVVVVVVVVVVV1aMLuAmJHA==
+  </data>
+ </layer>
+ <layer name="corposes" width="780" height="48">
+  <data encoding="base64" compression="zlib">
+   eJzt2jkOwCAMBECqHP//cKo0SFGCTIwQMx2NcbloKQUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg3Tl6gUaz7QsAADPbqvMRmJWR5et9AQCAPJHMvwfvbn2r6BoAACDXU+aP9A5f57V2B713AgCAFfyRo3v/A+oxL9pnAADAiuRoAAAAAAAAAAAAAAAAAAAAAADgdgEokACY
+  </data>
+ </layer>
+</map>
