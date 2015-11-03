@@ -29,35 +29,58 @@ var IPlayerCharacter = (function () {
       }
     };
     var controlUpdate = function () {
-      sprintUpdate.call(this);
-      directionUpdate.call(this);
+      if (!this.casting) {
+        sprintUpdate.call(this);
+        directionUpdate.call(this);
+      }
     };
     var graphicUpdate = function () {
-      if (Math.round(this.body.velocity.x) !== 0 ||
-          Math.round(this.body.velocity.y) !== 0) {
-        if (this.keys.sprint.isDown) {
-          this.animations.play('sprint');
+      if (!this.casting) {
+        if (Math.round(this.body.velocity.x) !== 0 ||
+            Math.round(this.body.velocity.y) !== 0) {
+          if (this.keys.sprint.isDown) {
+            this.animations.play('sprint');
+          } else {
+            this.animations.play('walk');
+          }
         } else {
-          this.animations.play('walk');
+          this.animations.play('stand');
         }
-      } else {
-        this.animations.play('stand');
       }
     };
     var update = function () {
       graphicUpdate.call(this);
       controlUpdate.call(this);
     };
+    var stopCasting = function () {
+      console.log('stop it!!', this.casting);
+      if (this.casting) {
+        useSelected.call(this);
+        this.casting = null;
+      }
+    };
     var useSelected = function () {
-      var selected = this.inventory.getSelectedItem();
-      if (selected.canBeUsed) {
-        selected.use();
+      this.inventory.useSelected();
+    };
+    var interruptCasting = function () {
+      if (this.casting) {
+        game.time.events.remove(this.casting);
+        this.casting = null;
       }
     };
 
     return {
       update : update,
-      useSelected : useSelected
+      useSelected : useSelected,
+      cast : function (item) {
+        this.animations.play(item.key + '-casting');
+        console.log(item.castTime);
+        this.casting = game.time.events.add(item.castTime, stopCasting, this);
+        console.log('start casting', this.casting);
+      },
+      castSelected : function () {
+        this.inventory.startCastingSelected();
+      }
     };
   })();
 
@@ -69,12 +92,21 @@ var IPlayerCharacter = (function () {
   };
 
   var initialize = function (character) {
+    var c;
     defineKeys.call(character);
     character.updates = character.updates || [];
     character.updates.push(Instance.update);
 
+    util.inheritFunctions(character, Instance);
+
     character.use = Instance.use;
-    character.keys.use.onDown.add(Instance.useSelected, character);
+    character.isCasting = false;
+    character.keys.use.onDown.add(Instance.castSelected, character);
+
+    c = config.items.water;
+    character.animations.add(c.key + '-casting', c.castAnimations.frames,
+                             c.castAnimations.fps, true);
+    character.smoothed = false;
   };
 
   return {

@@ -39,15 +39,14 @@ var Inventory = (function () {
 
         return thing;
       },
-      addItem : function (key, max, cooldownTime) {
-        var item = Item.create(key, this, max, cooldownTime);
+      addItem : function (key, max, cooldownTime, castTime) {
+        var item = Item.create(key, this, max, cooldownTime, castTime);
         return item;
       },
       lootItems : function (loot) {
         var i = loot.length;
         while (i--) {
           if (loot[i] && !this.getItem(loot[i]).isFull()) {
-            console.log(this.getItem(loot[i]), loot[i]);
             this.getItem(loot[i]).fill();
             loot[i] = null;
           }
@@ -55,6 +54,20 @@ var Inventory = (function () {
       },
       getItem : function (key) {
         return this.items[this.hash[key]];
+      },
+      startCastingSelected : function () {
+        var selected = this.getSelectedItem();
+        if (selected.canBeUsed()) {
+          console.log(this.level.pc.key);
+          this.level.pc.cast(selected);
+          // selected.use();
+        }
+      },
+      useSelected : function () {
+        var selected = this.getSelectedItem();
+        if (selected.canBeUsed()) {
+          selected.use();
+        }        
       }
     };
   })();
@@ -62,7 +75,7 @@ var Inventory = (function () {
   return {
     keys : ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE',
             'SIX', 'SEVEN', 'EIGHT', 'NINE', 'ZERO'],
-    create : function () {
+    create : function (level) {
       var inventory = {
         selectedItem : 0,
         items : [],
@@ -75,11 +88,12 @@ var Inventory = (function () {
       inventory.selectionFrame =
         inventory.addSprite(0,0, 'selection-frame');
       inventory.frame = inventory.addSprite(0,0, 'inventory-frame');
+      inventory.level = level;
 
       c = config.items.water;
-      inventory.addItem(c.key, c.max, c.cooldown);
+      inventory.addItem(c.key, c.max, c.cooldown, c.castTime);
       c = config.items.food;
-      inventory.addItem(c.key, c.max, c.cooldown);
+      inventory.addItem(c.key, c.max, c.cooldown, c.castTime);
 
       inventory.addKeys();
 

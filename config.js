@@ -37,12 +37,23 @@ var config = {
     water : {
       key : 'water',
       cooldown : 500,
-      max : 2
+      max : 2,
+      castTime : 2000,
+      castAnimations : {
+        frames : [11, 12,
+                  13, 13, 13, 13, 14, 14, 14, 14, 14,
+                  13, 13, 13, 13, 14, 14, 14, 14, 14,
+                  13, 13, 13, 13, 14, 14, 14, 14, 14,
+                  13, 13, 13, 13,
+                  12, 11, 11, 11, 11, 11, 11],
+        fps : 10
+      }
     },
     food : {
       key : 'food',
       cooldown : 1000,
-      max : 1
+      max : 1,
+      castTime : 3000
     }
   } // TODO: fix loot, return, water and food constants
   // meanwhile, items configuration is totally useless

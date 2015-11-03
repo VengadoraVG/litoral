@@ -31,7 +31,7 @@ var Item = (function () {
   };
 
   return {
-    create : function (key, inventory, max, cooldownTime, chargesLeft) {
+    create : function (key, inventory, max, cooldownTime, castTime) {
       var x = inventory.items.length * inventory.selectionFrame.width,
           y = 0,
           item = inventory.addSprite(x,y, key);
@@ -45,6 +45,7 @@ var Item = (function () {
 
       item.max = max;
       item.cooldownTime = cooldownTime;
+      item.castTime = castTime;
 
       addAnimations.call(item);
       item.fill();
