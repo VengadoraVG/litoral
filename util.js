@@ -18,6 +18,19 @@ var util = (function () {
 
       return instance;
     },
+    inheritProperties : function (instance, functions) {
+      var x,
+          prop;
+
+      for (x in functions) {
+        prop = functions[x];
+        if (typeof(prop) !== 'function') {
+          instance[x] = prop;
+        }
+      }
+
+      return instance;
+    },
     execute : function (functions, context) {
       if (functions) {
         for (var f of functions) {

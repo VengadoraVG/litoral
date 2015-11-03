@@ -34,7 +34,7 @@ var batallaDeCalama = (function () {
 
     var graphicEnvorinment = Parallax.create(map);
 
-    Corpose.createAll(config.batallaDeCalama.corposes);
+    Corpose.createAll(config.batallaDeCalama.corposes, this);
     // Corpose.enableLvlEditor(this);
   };
 

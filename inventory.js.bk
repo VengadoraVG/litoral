@@ -1,0 +1,97 @@
+/**
+ * must be created only once per level.
+ */
+var Inventory = (function () {
+  var hash = {
+    'water' : 0,
+    'food' : 1
+  };
+
+  var Instance = (function () {
+
+    return {
+      addItem : function (itemConfig) {
+        var item = Inventory.addSprite(
+          this.items.length*this.selectionFrame.width, 0, itemConfig.key);
+
+        util.inheritFunctions(item, itemConfig);
+        util.inheritProperties(item, itemConfig);
+        item.create();
+        this.items.push(item);
+
+        return item;
+      },
+      getSelectedItem : function () {
+        return this.items[this.selectionFrame.selection];
+      },
+      select : function (index) {
+        this.selectionFrame.selection = index;
+        this.selectionFrame.cameraOffset.x = index * this.selectionFrame.width;
+      },
+      lootItems : function (loot) {
+        var i,
+            item;
+        for (i=0; i<loot.length; i++) {
+          if (loot[i]) {
+            item = this.getItem(loot[i]);
+            console.log(item);
+            if (!item.isFull()) {
+              item.reload();
+              loot[i] = null;
+            }
+          }
+        }
+      },
+      getItem : function (loot) {
+        return Inventory.hash[loot];
+      }
+    };
+  })();
+
+  var listenToSelectionKeys = function () {
+    var i,
+        select = function () {
+          this.inventory.select(this.index);
+        };
+
+    for (i=0; i<this.keys.length; i++) {
+      this.keys[i].inventory = this;
+      this.keys[i].index = i;
+      this.keys[i].onDown.add(select, this.keys[i]);
+    }
+  };
+
+  return {
+    create : function (lvl) {
+      var inventory = {
+        frame : Inventory.addSprite(0,0, 'inventory-frame'),
+        selectionFrame : Inventory.addSprite(0,0, 'selection-frame'),
+        items : [],
+      };
+
+      inventory.selectionFrame.selection = 0;
+      inventory.keys = [
+        game.input.keyboard.addKey(Phaser.Keyboard.ONE),
+        game.input.keyboard.addKey(Phaser.Keyboard.TWO)
+      ];
+
+      util.inheritFunctions(inventory, Instance);
+      inventory.addItem(Loot.water);
+      inventory.addItem(Loot.food);
+      listenToSelectionKeys.call(inventory);
+
+      return inventory;
+    },
+
+    addSprite : function (x,y, key) {
+      var thing = game.add.sprite(x,game.height-y, key);
+      thing.anchor.set(0,1);
+      thing.fixedToCamera = true;
+      zOrder.putInLayer(thing, 'MENU');
+
+      return thing;
+    },
+
+    hash : hash
+  };
+})();

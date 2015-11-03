@@ -1,8 +1,0 @@
-var Loot = (function () {
-  return {
-    type: {
-      WATER : 0,
-      FOOD : 1      
-    }
-  };
-})();
