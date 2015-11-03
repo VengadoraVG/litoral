@@ -17,7 +17,6 @@ var Item = (function () {
       fill : function () {
         this.chargesLeft = this.max;
         this.animations.play(this.chargesLeft);
-        console.log('ding', this.chargesLeft);
       }
     };
   })();

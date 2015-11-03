@@ -32,6 +32,8 @@ var IPlayerCharacter = (function () {
       if (!this.casting) {
         sprintUpdate.call(this);
         directionUpdate.call(this);
+      } else {
+        this.body.velocity.x = 0;
       }
     };
     var graphicUpdate = function () {
@@ -53,7 +55,6 @@ var IPlayerCharacter = (function () {
       controlUpdate.call(this);
     };
     var stopCasting = function () {
-      console.log('stop it!!', this.casting);
       if (this.casting) {
         useSelected.call(this);
         this.casting = null;
@@ -76,7 +77,6 @@ var IPlayerCharacter = (function () {
         this.animations.play(item.key + '-casting');
         console.log(item.castTime);
         this.casting = game.time.events.add(item.castTime, stopCasting, this);
-        console.log('start casting', this.casting);
       },
       castSelected : function () {
         this.inventory.startCastingSelected();
@@ -99,7 +99,6 @@ var IPlayerCharacter = (function () {
 
     util.inheritFunctions(character, Instance);
 
-    character.use = Instance.use;
     character.isCasting = false;
     character.keys.use.onDown.add(Instance.castSelected, character);
 

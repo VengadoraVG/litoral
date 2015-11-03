@@ -12,20 +12,33 @@ var ILevel = (function () {
     };    
 
     var create = function () {
+      var i;
+
       game.physics.startSystem(Phaser.Physics.ARCADE);
       game.physics.arcade.gravity.set(0,config.world.gravity);
       inventory = Inventory.create(this);
+
+      Question.spawn(this);
+      Answer.spawn(this);
+      Answer.initialize(this);
+      this.qaMenu = QAMenu.create();
     };
 
     var update = function () {
       game.physics.arcade.collide(this.pc, this.tilemap.floor);
+      Question.update();
       zOrder.sort();
+      this.qaMenu.update();
     };
 
     var preload = function () {
       // inventory
       game.load.image('inventory-frame', 'assets/inventory-frame.png');
       game.load.image('selection-frame', 'assets/selection-frame.png');
+      game.load.image('question', 'assets/question.png');
+      game.load.image('answer', 'assets/answer.png');
+      game.load.image('selected-question-frame',
+                      'assets/selected-question-frame.png');
     };
 
     return {

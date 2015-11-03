@@ -55,6 +55,42 @@ var config = {
       max : 1,
       castTime : 3000
     }
-  } // TODO: fix loot, return, water and food constants
-  // meanwhile, items configuration is totally useless
+  },
+  qa : [
+    {
+      question : {
+        text : 'test question',
+        place : {
+          x : 19 * 20,
+          y: 40 * 20,
+          levelName : 'batalla-de-calama'
+        },
+      },
+      answer : {
+        text : 'test answer',
+        place : {
+          x : 12 * 20,
+          y : 40 * 20,
+          levelName : 'batalla-de-calama'
+        }
+      }
+    }, {
+      question : {
+        text : 'hubieron muertos en la batalla de calama?',
+        place : {
+          x : 23 * 20,
+          y : 41 * 20,
+          levelName : 'batalla-de-calama'
+        }
+      },
+      answer : {
+        text : 'sí, hubieron 27 muertos',
+        place : {
+          x : 480,
+          y : 800,
+          levelName : 'batalla-de-calama'
+        }
+      }
+    }
+  ]
 };
